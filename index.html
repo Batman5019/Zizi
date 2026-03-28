@@ -732,127 +732,78 @@ function toggleLang() {
 }
    
 const CHAPTERS = [
-  // ── ORIGINAL 5 CHAPTERS (Primary 1) ──────────────────
+  // ── CHARACTER CHAPTERS ────────────────────────────────
   {
-    id: 0, title: 'Fields & Basics', emoji: '🌾', color: '#FF6B35',
-    subtitle: 'Your very first characters!',
+    id: 0, 
+    title: { en: 'Fields & Basics', zh: '田地与基础', vi: 'Ruộng & Cơ bản' }, 
+    emoji: '🌾', color: '#FF6B35',
+    subtitle: { en: 'Your very first characters!', zh: '最初的汉字！', vi: 'Những chữ đầu tiên!' },
     chars: ['田','刀','在','上','下','大','小','来']
   },
   {
-    id: 1, title: 'Fire & Size', emoji: '🔥', color: '#D4A000',
-    subtitle: 'Open, close, big and small',
+    id: 1, 
+    title: { en: 'Fire & Size', zh: '火与大小', vi: 'Lửa & Kích thước' }, 
+    emoji: '🔥', color: '#D4A000',
+    subtitle: { en: 'Open, close, big and small', zh: '开、关、大和小', vi: 'Mở, đóng, to và nhỏ' },
     chars: ['开','火','关','两','长','广','多','少']
   },
   {
-    id: 2, title: 'Body & Objects', emoji: '👁️', color: '#06D6A0',
-    subtitle: 'Eyes, hands and everyday things',
+    id: 2, 
+    title: { en: 'Body & Objects', zh: '身体与物品', vi: 'Cơ thể & Đồ vật' }, 
+    emoji: '👁️', color: '#06D6A0',
+    subtitle: { en: 'Eyes, hands and everyday things', zh: '眼、手和日常事物', vi: 'Mắt, tay và đồ dùng hàng ngày' },
     chars: ['目','手','本','工','门','见','又','头']
   },
   {
-    id: 3, title: 'Animals & Numbers', emoji: '🐄', color: '#118AB2',
-    subtitle: 'Count and spot animals',
+    id: 3, 
+    title: { en: 'Animals & Numbers', zh: '动物与数字', vi: 'Động vật & Số' }, 
+    emoji: '🐄', color: '#118AB2',
+    subtitle: { en: 'Count and spot animals', zh: '数数和认动物', vi: 'Đếm và chỉ động vật' },
     chars: ['牛','贝','六','支','九','什','么','文']
   },
   {
-    id: 4, title: 'Nature & Time', emoji: '🌙', color: '#845EC2',
-    subtitle: 'Moon, sky, water and more',
+    id: 4, 
+    title: { en: 'Nature & Time', zh: '自然与时间', vi: 'Thiên nhiên & Thời gian' }, 
+    emoji: '🌙', color: '#845EC2',
+    subtitle: { en: 'Moon, sky, water and more', zh: '月、天、水等等', vi: 'Trăng, trời, nước và hơn nữa' },
     chars: ['月','天','水','寸','正','反','白','古']
   },
-  // ── NEW CHAPTERS ─────────────────────────────────────
   {
-    id: 5, title: 'People & Family', emoji: '👨‍👩‍👧', color: '#E91E8C',
-    subtitle: 'Talk about people you love',
+    id: 5, 
+    title: { en: 'People & Family', zh: '人与家庭', vi: 'Người & Gia đình' }, 
+    emoji: '👨‍👩‍👧', color: '#E91E8C',
+    subtitle: { en: 'Talk about people you love', zh: '谈论你爱的人', vi: 'Nói về người bạn yêu thương' },
     chars: ['人','口','女','子','父','母','兄','弟']
   },
   {
-    id: 6, title: 'Numbers 1–10', emoji: '🔢', color: '#FF5722',
-    subtitle: 'Count from one to ten!',
+    id: 6, 
+    title: { en: 'Numbers 1–10', zh: '数字1–10', vi: 'Số 1–10' }, 
+    emoji: '🔢', color: '#FF5722',
+    subtitle: { en: 'Count from one to ten!', zh: '从一数到十！', vi: 'Đếm từ một đến mười!' },
     chars: ['一','二','三','四','五','六','七','八','九','十']
-  },
-  {
-    id: 7, title: 'Colors & Appearance', emoji: '🎨', color: '#9C27B0',
-    subtitle: 'Describe how things look',
-    chars: ['红','绿','蓝','黄','黑','白','大','小']
-  },
-  {
-    id: 8, title: 'Food & Drink', emoji: '🍜', color: '#F44336',
-    subtitle: 'What do you like to eat?',
-    chars: ['吃','喝','饭','水','肉','鱼','菜','果']
-  },
-  {
-    id: 9, title: 'Places & Movement', emoji: '🏠', color: '#2196F3',
-    subtitle: 'Where are you going?',
-    chars: ['去','来','回','上','下','里','外','家']
-  },
-  {
-    id: 10, title: 'Time & Days', emoji: '📅', color: '#009688',
-    subtitle: 'Talk about when things happen',
-    chars: ['今','天','明','年','月','日','时','分']
-  },
-  {
-    id: 11, title: 'Feelings & States', emoji: '😊', color: '#FF9800',
-    subtitle: 'Express how you feel',
-    chars: ['好','不','很','有','没','爱','想','高']
   },
   // ── SENTENCE CHAPTERS ────────────────────────────────
   {
-    id: 12, title: 'Say Hello!', emoji: '👋', color: '#00BCD4',
-    subtitle: 'Learn greetings and introductions',
+    id: 12, 
+    title: { en: 'Say Hello!', zh: '打招呼！', vi: 'Chào hỏi!' }, 
+    emoji: '👋', color: '#00BCD4',
+    subtitle: { en: 'Learn greetings', zh: '学习问候', vi: 'Học chào hỏi' },
     isSentence: true,
     sentences: [
-      { zh:'你好', py:'nǐ hǎo', en:'Hello!', chars:['你','好'], tip:'The most common Chinese greeting!' },
-      { zh:'谢谢', py:'xiè xiè', en:'Thank you!', chars:['谢','谢'], tip:'Repeat it twice to be polite!' },
-      { zh:'再见', py:'zài jiàn', en:'Goodbye!', chars:['再','见'], tip:'再 = again, 见 = see — "see you again!"' },
-      { zh:'对不起', py:'duì bù qǐ', en:"I'm sorry!", chars:['对','不','起'], tip:'Very important to know!' },
-      { zh:'没关系', py:'méi guān xi', en:"It\'s OK!", chars:['没','关','系'], tip:'Use this to say "no worries!"' },
-      { zh:'早上好', py:'zǎo shàng hǎo', en:'Good morning!', chars:['早','上','好'], tip:'早 = early/morning' },
-      { zh:'晚上好', py:'wǎn shàng hǎo', en:'Good evening!', chars:['晚','上','好'], tip:'晚 = evening/late' },
-      { zh:'我叫…', py:'wǒ jiào', en:'My name is…', chars:['我','叫'], tip:'Tell people your name!' }
+      { zh:'你好', py:'nǐ hǎo', en: { en: 'Hello!', zh: '你好！', vi: 'Xin chào!' }, chars:['你','好'], tip:{ en:'Common greeting', zh:'常用问候', vi:'Lời chào phổ biến' } },
+      { zh:'谢谢', py:'xiè xiè', en: { en: 'Thank you!', zh: '谢谢！', vi: 'Cảm ơn!' }, chars:['谢','谢'], tip:{ en:'Say twice to be polite', zh:'说两次表示礼貌', vi:'Nói hai lần để lịch sự' } },
+      { zh:'再见', py:'zài jiàn', en: { en: 'Goodbye!', zh: '再见！', vi: 'Tạm biệt!' }, chars:['再','见'], tip:{ en:'See you again', zh:'再次见面', vi:'Hẹn gặp lại' } }
     ]
   },
   {
-    id: 13, title: 'I Am & I Have', emoji: '🙋', color: '#8BC34A',
-    subtitle: 'Talk about yourself',
+    id: 13, 
+    title: { en: 'I Am & I Have', zh: '我是 & 我有', vi: 'Tôi là & Tôi có' }, 
+    emoji: '🙋', color: '#8BC34A',
+    subtitle: { en: 'Talk about yourself', zh: '谈论你自己', vi: 'Nói về bản thân' },
     isSentence: true,
     sentences: [
-      { zh:'我是学生', py:'wǒ shì xué shēng', en:'I am a student', chars:['我','是','学','生'], tip:'是 = am/is/are' },
-      { zh:'我有一本书', py:'wǒ yǒu yī běn shū', en:'I have one book', chars:['我','有','一','本','书'], tip:'有 = have' },
-      { zh:'我很高兴', py:'wǒ hěn gāo xìng', en:'I am very happy', chars:['我','很','高','兴'], tip:'很 = very' },
-      { zh:'我不知道', py:'wǒ bù zhī dào', en:"I don't know", chars:['我','不','知','道'], tip:'不 = not/no' },
-      { zh:'我喜欢吃', py:'wǒ xǐ huān chī', en:'I like to eat', chars:['我','喜','欢','吃'], tip:'喜欢 = like' },
-      { zh:'我要去', py:'wǒ yào qù', en:'I want to go', chars:['我','要','去'], tip:'要 = want to' },
-      { zh:'我看见了', py:'wǒ kàn jiàn le', en:'I can see it', chars:['我','看','见','了'], tip:'看 = look, 见 = see' },
-      { zh:'我回家了', py:'wǒ huí jiā le', en:'I\'m going home', chars:['我','回','家','了'], tip:'回 = return, 家 = home' }
-    ]
-  },
-  {
-    id: 14, title: 'Questions!', emoji: '❓', color: '#FF6B35',
-    subtitle: 'Ask questions in Chinese',
-    isSentence: true,
-    sentences: [
-      { zh:'你好吗？', py:'nǐ hǎo ma?', en:'How are you?', chars:['你','好','吗'], tip:'吗 turns a statement into a question!' },
-      { zh:'这是什么？', py:'zhè shì shén me?', en:'What is this?', chars:['这','是','什','么'], tip:'什么 = what' },
-      { zh:'你叫什么名字？', py:'nǐ jiào shén me míng zi?', en:'What\'s your name?', chars:['你','叫','什','么','名','字'], tip:'名字 = name' },
-      { zh:'多少钱？', py:'duō shǎo qián?', en:'How much is it?', chars:['多','少','钱'], tip:'Useful for shopping!' },
-      { zh:'在哪里？', py:'zài nǎ lǐ?', en:'Where is it?', chars:['在','哪','里'], tip:'哪里 = where' },
-      { zh:'几点了？', py:'jǐ diǎn le?', en:'What time is it?', chars:['几','点','了'], tip:'几 = how many, 点 = o\'clock' },
-      { zh:'为什么？', py:'wèi shén me?', en:'Why?', chars:['为','什','么'], tip:'A very useful question word!' },
-      { zh:'怎么了？', py:'zěn me le?', en:'What\'s wrong?', chars:['怎','么','了'], tip:'Used when something happened' }
-    ]
-  },
-  {
-    id: 15, title: 'At School', emoji: '📚', color: '#3F51B5',
-    subtitle: 'School words and sentences',
-    isSentence: true,
-    sentences: [
-      { zh:'上课了', py:'shàng kè le', en:'Class has started', chars:['上','课','了'], tip:'上 = go up/start, 课 = class' },
-      { zh:'下课了', py:'xià kè le', en:'Class is over', chars:['下','课','了'], tip:'下 = go down/end' },
-      { zh:'我要读书', py:'wǒ yào dú shū', en:'I want to read', chars:['我','要','读','书'], tip:'读 = read, 书 = book' },
-      { zh:'老师好', py:'lǎo shī hǎo', en:'Hello teacher!', chars:['老','师','好'], tip:'Always greet your teacher!' },
-      { zh:'同学们好', py:'tóng xué men hǎo', en:'Hello classmates!', chars:['同','学','们','好'], tip:'们 makes a word plural' },
-      { zh:'我不会', py:'wǒ bù huì', en:"I can't do it", chars:['我','不','会'], tip:'会 = can/know how to' },
-      { zh:'请再说一次', py:'qǐng zài shuō yī cì', en:'Please say it again', chars:['请','再','说','一','次'], tip:'请 = please — very polite!' },
-      { zh:'我明白了', py:'wǒ míng bái le', en:'I understand now!', chars:['我','明','白','了'], tip:'明白 = understand — 白 = white/clear!' }
+      { zh:'我是学生', py:'wǒ shì xué shēng', en: { en: 'I am a student', zh: '我是学生', vi: 'Tôi là học sinh' }, chars:['我','是','学','生'], tip:{ en:'是 = am/is/are', zh:'是 = 是', vi:'是 = là' } },
+      { zh:'我有一本书', py:'wǒ yǒu yī běn shū', en: { en: 'I have a book', zh: '我有一本书', vi: 'Tôi có một cuốn sách' }, chars:['我','有','一','本','书'], tip:{ en:'有 = have', zh:'有 = 有', vi:'有 = có' } }
     ]
   }
 ];
@@ -1282,6 +1233,12 @@ function renderChs() {
   document.getElementById('pane-chapters').innerHTML = html;
 }
 
+   function getText(obj) {
+  if (typeof obj === 'object' && obj !== null) {
+    return obj[currentLang] || obj['en'] || Object.values(obj)[0];
+  }
+  return obj;
+}
 function chCardHTML(ch) {
   if (ch.isSentence) {
     const done = (S['sent_' + ch.id] || []).length;
@@ -1289,25 +1246,25 @@ function chCardHTML(ch) {
     const pct = Math.round(done / total * 100);
     return `<div class="ch-card" style="border-color:${ch.color}" onclick="openCh(${ch.id})">
       <div style="font-size:1.4rem;margin-bottom:3px">${ch.emoji}</div>
-      <div class="ch-label" style="color:${ch.color}">${ch.title}</div>
-      <div class="ch-type-badge sentence">💬 Sentences</div>
-      <div class="ch-subtitle">${ch.subtitle}</div>
+      <div class="ch-label" style="color:${ch.color}">${getText(ch.title)}</div>
+      <div class="ch-type-badge sentence">${t('chTypeSent')}</div>
+      <div class="ch-subtitle">${getText(ch.subtitle)}</div>
       <div class="ch-prog-row">
         <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
         <span style="font-size:.72rem;color:#aaa;white-space:nowrap">${done}/${total}</span>
       </div>
     </div>`;
   }
+  // Character Chapter Card
   const done = ch.chars.filter(c => getStatus(c) === 'mastered').length;
   const part = ch.chars.filter(c => getStatus(c) === 'partial').length;
   const pct = Math.round((done + part * 0.5) / ch.chars.length * 100);
-  const preview = ch.chars.slice(0, 8);
   return `<div class="ch-card" style="border-color:${ch.color}" onclick="openCh(${ch.id})">
     <div style="font-size:1.4rem;margin-bottom:3px">${ch.emoji}</div>
-    <div class="ch-label" style="color:${ch.color}">${ch.title}</div>
-    <div class="ch-type-badge">✏️ Characters</div>
-    <div class="ch-chars">${preview.slice(0,5).join(' ')}<br>${preview.slice(5).join(' ')}</div>
-    <div class="ch-subtitle">${ch.subtitle}</div>
+    <div class="ch-label" style="color:${ch.color}">${getText(ch.title)}</div>
+    <div class="ch-type-badge">${t('chTypeChars')}</div>
+    <div class="ch-chars">${ch.chars.slice(0,5).join(' ')}</div>
+    <div class="ch-subtitle">${getText(ch.subtitle)}</div>
     <div class="ch-prog-row">
       <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
       <span style="font-size:.72rem;color:#aaa;white-space:nowrap">${done}/${ch.chars.length}⭐</span>
@@ -1347,6 +1304,7 @@ function renderLearn() {
   renderChar();
 }
 
+// ── RENDER SENTENCE CHAPTER (Updated) ────────────────
 function renderSentenceChapter(pane) {
   const ch = curCh;
   const done = S['sent_' + ch.id] || [];
@@ -1354,31 +1312,24 @@ function renderSentenceChapter(pane) {
     <div class="learn-hdr">
       <button class="back-btn" onclick="goTab('chapters');renderChs()">←</button>
       <div>
-        <div style="font-size:1.1rem;font-weight:800;color:#333">${ch.emoji} ${ch.title}</div>
-        <div style="font-size:.78rem;color:#888">${ch.subtitle}</div>
+        <div style="font-size:1.1rem;font-weight:800;color:#333">${ch.emoji} ${getText(ch.title)}</div>
+        <div style="font-size:.78rem;color:#888">${getText(ch.subtitle)}</div>
       </div>
     </div>
-    <div style="margin-bottom:14px;font-size:.85rem;color:#888">
-      Tap 🔊 to hear. Tap 🎤 to practice saying it. Tap ✅ when you know it!
-    </div>
+    <div style="margin-bottom:14px;font-size:.85rem;color:#888">${t('sentTap')}</div>
     ${ch.sentences.map((s, i) => {
       const isDone = done.includes(i);
-      return `<div class="sent-card" style="border-color:${isDone ? '#06D6A0' : ch.color};${isDone ? 'background:#F0FFF9' : ''}">
+      return `<div class="sent-card" style="border-color:${isDone ? '#06D6A0' : ch.color}">
         <div style="display:flex;justify-content:space-between;align-items:flex-start">
           <div class="sent-zh" onclick="spk('${s.zh}')">${s.zh}</div>
           <div style="font-size:1.5rem">${isDone ? '⭐' : '○'}</div>
         </div>
         <div class="sent-py">${s.py}</div>
-        <div class="sent-en">🇬🇧 ${s.en}</div>
-        <div class="sent-tip">💡 ${s.tip}</div>
-        <div class="sent-chars">
-          ${s.chars.map(c => CD[c] ? `<div class="sent-char-pill">${c}<small>${CD[c]?.py}</small></div>` : '').join('')}
-        </div>
+        <div class="sent-en">🇬🇧 ${getText(s.en)}</div>
+        <div class="sent-tip">💡 ${getText(s.tip)}</div>
         <div class="sent-actions">
-          <button class="wbtn blue" onclick="spk('${s.zh}')">🔊 Hear</button>
-          <button class="wbtn blue slow" style="background:#5E9E60;border-color:#5E9E60;box-shadow:0 3px 0 #3D7B3F" onclick="spk('${s.zh}',true)">🐢 Slow</button>
-          <button class="wbtn" onclick="practiceSent(${ch.id},${i},'${encodeURIComponent(s.zh)}','${encodeURIComponent(s.py)}','${encodeURIComponent(s.en)}')">🎤 Practice</button>
-          ${!isDone ? `<button class="wbtn green" onclick="markSent(${ch.id},${i})">✅ I know it!</button>` : '<span style="color:#06D6A0;font-weight:700;font-size:.85rem">✅ Learned!</span>'}
+          <button class="wbtn blue" onclick="spk('${s.zh}')">${t('sentBtnHear')}</button>
+          <button class="wbtn green" onclick="markSent(${ch.id},${i})">${t('sentBtnKnow')}</button>
         </div>
       </div>`;
     }).join('')}
@@ -1459,8 +1410,8 @@ function renderChar() {
           <span class="pill en">🇬🇧 ${d.en}</span>
           <span class="pill">${d.emoji}</span>
         </div>
-        <div class="char-meaning-full">${d.enFull}</div>
-        <div class="char-tip">💡 ${d.tip}</div>
+        <div class="char-meaning-full">${getText(d.enFull)}</div>
+        <div class="char-tip">💡 ${getText(d.tip)}</div>
         <div style="text-align:center;color:#bbb;font-size:.75rem;margin-top:5px">👆 Tap character to hear it!</div>
       </div>
     </div>
