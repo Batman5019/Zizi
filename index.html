@@ -706,14 +706,17 @@ function updateHdr() {
 
 // ── STROKE NAME LOOKUP TABLE (Accurate per character) ─────────────────
 const STROKE_ORDER = {
-  '田': ['s', 's', 'hz', 'h', 's', 'h'],
+  '田': ['s', 'hz', 'h', 's', 'h'],
   '刀': ['hzg', 'p'],
+  '在': ['h', 'p', 's', 'h', 's', 'h'],
+  '上': ['s', 'h', 'h'],
+  '下': ['h', 's', 'd'],
+  '大': ['h', 'p', 'n'],
+  '小': ['sg', 'p', 'n'],
+  '来': ['h', 'd', 'p', 'h', 's', 'p', 'n'],
   '一': ['h'],
   '十': ['h', 's'],
-  '大': ['h', 'p', 'n'],
-  '上': ['h', 's', 'h'],
-  '下': ['h', 's', 'h'],
-  '小': ['s', 'p', 'n'],
+  '': ['s', 'p', 'n'],
   '人': ['p', 'n'],
   '口': ['h', 's', 's', 'h'],
   '火': ['p', 'p', 'd', 'd'],
@@ -1350,24 +1353,43 @@ function beginQuiz(char) {
 }
 
 function doAnim() {
-  if (!watchW || !currentCharData) { if (watchW) watchW.animateCharacter(); return; }
-  // Animate and announce each stroke name as it plays
-  const total = currentCharData.strokes?.length || 0;
-  watchW.animateCharacter({
-    onAnimationStart: () => {
-      announceStroke(0);
+  if (!watchW) return;
+  
+  // Hide the character first so we see the animation from scratch
+  watchW.hideCharacter();
+  watchW.hideOutline();
+  
+  // Small delay ensures the writer is ready and prevents race conditions
+  setTimeout(() => {
+    // Announce the first stroke immediately (index 0)
+    announceStroke(0);
+    
+    // Start the animation
+    watchW.animateCharacter({
+      onComplete: function() {
+        // Optional: Show outline again when done
+        watchW.showOutline();
+      }
+    });
+    
+    // Schedule remaining strokes based on timing
+    if (currentCharData && currentCharData.strokes) {
+      const total = currentCharData.strokes.length;
+      if (total > 1) {
+        // Hanzi Writer default animation is roughly 1-1.5s per stroke including delays.
+        // We use a safe interval (1.1s) to trigger the announcement before the stroke draws.
+        const delayPerStroke = 1100; 
+        
+        for (let i = 1; i < total; i++) {
+          ((idx) => {
+            setTimeout(() => {
+              announceStroke(idx);
+            }, idx * delayPerStroke);
+          })(i);
+        }
+      }
     }
-  });
-  // Schedule announcements based on animation timing
-  if (total > 1) {
-    const delay = 1000; // ~1s per stroke
-    for (let i = 1; i < total; i++) {
-      ((idx) => setTimeout(() => {
-        // Only announce if still on same character
-        if (currentCharData && currentCharData.strokes?.length > idx) announceStroke(idx);
-      }, i * delay))(i);
-    }
-  }
+  }, 50); // 50ms delay to ensure writer state is settled
 }
 
 function doLoop() {
