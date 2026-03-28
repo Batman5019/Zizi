@@ -6,13 +6,13 @@
 <meta name="theme-color" content="#FFBA08">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="HanziHero">
+<meta name="apple-mobile-web-app-title" content="ZiZi">
 <meta name="description" content="Learn Chinese characters with stroke order, pronunciation tests and fun games!">
 <title>🐼 ZiZi — Learn Chinese!</title>
 
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>/* ═══════════════════════════════════════
-   HANZIHERO — STYLESHEET
+   ZiZi — STYLESHEET
 ═══════════════════════════════════════ */
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800;900&family=Noto+Sans+SC:wght@400;700;900&display=swap');
 
@@ -315,6 +315,25 @@ header h1{font-size:clamp(1.5rem,5vw,2.4rem);color:#7B2D00;text-shadow:2px 2px 0
   .fgrid{grid-template-columns:repeat(3,1fr)}
   .ch-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
 }
+
+   /* LANGUAGE TOGGLE BUTTON */
+.lang-btn {
+  background: rgba(255,255,255,0.3);
+  border: 2px solid rgba(255,255,255,0.5);
+  color: #7B2D00;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-family: 'Baloo 2', cursive;
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  margin-left: auto; /* Pushes it to the right side of the title */
+  transition: all 0.2s;
+}
+.lang-btn:hover {
+  background: rgba(255,255,255,0.6);
+  transform: scale(1.05);
+}
 </style>
 </head>
 <body>
@@ -394,9 +413,323 @@ header h1{font-size:clamp(1.5rem,5vw,2.4rem);color:#7B2D00;text-shadow:2px 2px 0
 <div id="toast"></div>
 
 <script>// ═══════════════════════════════════════════════════════
-// HANZIHERO DATA — Characters, Chapters, Sentences
+// ZiZi DATA — Characters, Chapters, Sentences
+// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// LANGUAGE SYSTEM
 // ═══════════════════════════════════════════════════════
 
+// 1. TRANSLATIONS DICTIONARY
+const LANG = {
+  en: {
+    // (Keep your existing English content here exactly as it was)
+    appTitle: 'ZiZi!',
+    install: '📲 Install App',
+    statMastered: 'Mastered',
+    statWrite: 'Write',
+    statSpeak: 'Speak',
+    chHeaderChars: '📖 Character Chapters',
+    chHeaderSent: '💬 Sentence Chapters',
+    chTypeChars: '✏️ Characters',
+    chTypeSent: '💬 Sentences',
+    learnBack: '←',
+    learnSub: 'Pass ✏️ Write + 🎤 Speak to master each character',
+    sentTap: 'Tap 🔊 to hear. Tap 🎤 to practice. Tap ✅ when you know it!',
+    sentLearned: '✅ Learned!',
+    sentBtnHear: '🔊 Hear',
+    sentBtnSlow: '🐢 Slow',
+    sentBtnPractice: '🎤 Practice',
+    sentBtnKnow: '✅ I know it!',
+    cardStep1: '✏️ Step 1 — Write:',
+    cardWatchTitle: '👀 Watch the stroke animation:',
+    cardDrawTitle: '✍️ Draw each stroke in the correct order!',
+    cardDrawHint: '(After 3 mistakes a hint shows)',
+    cardDrawStatus: '✏️ Draw the 1st stroke — follow the correct direction!',
+    cardWritePass: '✅ Write Test Passed!',
+    cardSpeakPass: '✅ Speak Test Passed!',
+    cardStep2: '🎤 Step 2 — Speak:',
+    cardStep2Lock: '🔒 Pass the Write Test first!',
+    cardStep2LockMsg: 'Pass the Write Test first!',
+    speakListen: '1️⃣ Listen carefully first:',
+    speakBtn: '🔊 Hear it!',
+    speakTone: 'Tone',
+    speakSay: '2️⃣ Now say it!',
+    speakAttempts: 'You get <strong>3 attempts</strong> — just try your best! 🤗',
+    speakBtnRec: '🎤 Tap &amp; Say It!',
+    navPrev: '← Prev',
+    navNext: 'Next →',
+    masteredMsg: '🌟 MASTERED! You can write AND say',
+    gamesTitle: '🎮 Pick a Game!',
+    gamesAll: 'All characters and sentences available! 🎮',
+    gMatchTitle: '🎯 Match It!',
+    gMatchDesc: 'Match character to meaning',
+    gFindTitle: '🔍 Find It!',
+    gFindDesc: 'Find the right character',
+    gPinyinTitle: '🎵 Pinyin Pick!',
+    gPinyinDesc: 'Choose the right sound',
+    gFlashTitle: '⚡ Flash Cards!',
+    gFlashDesc: 'Quick memory challenge!',
+    gSentTitle: '💬 Sentence Match!',
+    gSentDesc: 'Match sentence to meaning',
+    gToneTitle: '🎶 Tone Quiz!',
+    gToneDesc: 'Pick the right tone!',
+    gScore: 'Score:',
+    gStreak: 'Streak:',
+    gWhatMean: 'What does this mean?',
+    gHowSay: 'How do you say this?',
+    gReveal: '🔮 Reveal Answer!',
+    gDidKnow: 'Did you know it?',
+    gYes: '✅ Yes!',
+    gNo: '❌ No',
+    gCorrect: 'Correct!',
+    gWrong: 'Not quite!',
+    gTryAgain: 'Try Again ➜',
+    gNext: 'Next ➜',
+    progTitle: '🏆 Your Progress',
+    progChars: 'Characters mastered:',
+    progSent: 'Sentences learned:',
+    progComplete: 'complete',
+    progWrite: 'Write',
+    progSpeak: 'Speak',
+    progMastered: 'Mastered',
+    progReset: '🔄 Reset Progress',
+    quizRetry: '🗑️ Retry',
+    quizHint: '💡 Hint',
+    quizStroke: 'Strokes:',
+    toastNoAudio: '⚠️ No audio. Try Chrome!',
+    toastNoVoice: '⚠️ No Chinese voice — install language pack.',
+    toastListen: '🎤 Listening... say the sentence!',
+    toastMicBlock: '🎙️ Microphone blocked!',
+    toastHeard: 'I heard:',
+    toastTryAgain: '— try again!',
+    toneNeutral: 'Neutral',
+    tone1: '1st (ā)',
+    tone2: '2nd (á)',
+    tone3: '3rd (ǎ)',
+    tone4: '4th (à)'
+  },
+  
+  zh: {
+    // (Keep your existing Chinese content here exactly as it was)
+    appTitle: '汉字英雄！',
+    install: '📲 安装应用',
+    statMastered: '已掌握',
+    statWrite: '书写',
+    statSpeak: '口语',
+    chHeaderChars: '📖 汉字章节',
+    chHeaderSent: '💬 句子章节',
+    chTypeChars: '✏️ 汉字',
+    chTypeSent: '💬 句子',
+    learnBack: '←',
+    learnSub: '通过 ✏️ 书写 + 🎤 口语 测试来掌握每个汉字',
+    sentTap: '点击 🔊 听读音。点击 🎤 练习发音。学会了点 ✅！',
+    sentLearned: '✅ 已学会！',
+    sentBtnHear: '🔊 听读音',
+    sentBtnSlow: '🐢 慢速',
+    sentBtnPractice: '🎤 练习',
+    sentBtnKnow: '✅ 我会了！',
+    cardStep1: '✏️ 第一步 — 书写：',
+    cardWatchTitle: '👀 观看笔画动画：',
+    cardDrawTitle: '✍️ 按正确的顺序和方向画出每一笔！',
+    cardDrawHint: '（3次错误后会显示提示）',
+    cardDrawStatus: '✏️ 画出第一笔 —— 跟随正确的方向！',
+    cardWritePass: '✅ 书写测试通过！',
+    cardSpeakPass: '✅ 口语测试通过！',
+    cardStep2: '🎤 第二步 — 口语：',
+    cardStep2Lock: '🔒 请先通过书写测试！',
+    cardStep2LockMsg: '请先通过书写测试！',
+    speakListen: '1️⃣ 先仔细听：',
+    speakBtn: '🔊 听一听！',
+    speakTone: '声调',
+    speakSay: '2️⃣ 现在请说！',
+    speakAttempts: '你有 <strong>3次机会</strong> —— 尽力就好！ 🤗',
+    speakBtnRec: '🎤 点击说话！',
+    navPrev: '← 上一个',
+    navNext: '下一个 →',
+    masteredMsg: '🌟 已掌握！你会写也会说',
+    gamesTitle: '🎮 选择游戏！',
+    gamesAll: '所有汉字和句子都可用！ 🎮',
+    gMatchTitle: '🎯 配对游戏！',
+    gMatchDesc: '将汉字与意思配对',
+    gFindTitle: '🔍 找汉字！',
+    gFindDesc: '找出正确的汉字',
+    gPinyinTitle: '🎵选拼音！',
+    gPinyinDesc: '选择正确的发音',
+    gFlashTitle: '⚡ 闪卡！',
+    gFlashDesc: '快速记忆挑战！',
+    gSentTitle: '💬 句子配对！',
+    gSentDesc: '将句子与意思配对',
+    gToneTitle: '🎶 声调测验！',
+    gToneDesc: '选择正确的声调！',
+    gScore: '分数：',
+    gStreak: '连胜：',
+    gWhatMean: '这是什么意思？',
+    gHowSay: '这个怎么读？',
+    gReveal: '🔮 揭示答案！',
+    gDidKnow: '你认识吗？',
+    gYes: '✅ 认识！',
+    gNo: '❌ 不认识',
+    gCorrect: '正确！',
+    gWrong: '不对哦！',
+    gTryAgain: '再试一次 ➜',
+    gNext: '下一个 ➜',
+    progTitle: '🏆 你的进度',
+    progChars: '已掌握汉字：',
+    progSent: '已学句子：',
+    progComplete: '完成',
+    progWrite: '书写',
+    progSpeak: '口语',
+    progMastered: '已掌握',
+    progReset: '🔄 重置进度',
+    quizRetry: '🗑️ 重试',
+    quizHint: '💡 提示',
+    quizStroke: '笔画：',
+    toastNoAudio: '⚠️ 无法播放音频。请使用Chrome！',
+    toastNoVoice: '⚠️ 没有检测到中文语音 —— 请安装中文语言包。',
+    toastListen: '🎤 正在听... 请说！',
+    toastMicBlock: '🎙️ 麦克风被阻止了！',
+    toastHeard: '我听到了：',
+    toastTryAgain: '—— 再试一次！',
+    toneNeutral: '轻声',
+    tone1: '一声 (ā)',
+    tone2: '二声 (á)',
+    tone3: '三声 (ǎ)',
+    tone4: '四声 (à)'
+  },
+
+  // ═════════════════════════════════════
+  // NEW VIETNAMESE TRANSLATIONS
+  // ═════════════════════════════════════
+  vi: {
+    appTitle: 'ZiZi!',
+    install: '📲 Cài đặt',
+    statMastered: 'Đã thuộc',
+    statWrite: 'Viết',
+    statSpeak: 'Nói',
+    
+    chHeaderChars: '📖 Chương Tự',
+    chHeaderSent: '💬 Chương Câu',
+    chTypeChars: '✏️ Tự',
+    chTypeSent: '💬 Câu',
+    
+    learnBack: '←',
+    learnSub: 'Vuốt ✏️ Viết + 🎤 Nói để thuộc lòng từng chữ',
+    sentTap: 'Chạm 🔊 để nghe. Chạm 🎤 để tập nói. Chạm ✅ khi bạn biết!',
+    sentLearned: '✅ Đã biết!',
+    sentBtnHear: '🔊 Nghe',
+    sentBtnSlow: '🐢 Chậm',
+    sentBtnPractice: '🎤 Tập',
+    sentBtnKnow: '✅ Tôi biết!',
+    
+    cardStep1: '✏️ Bước 1 — Viết:',
+    cardWatchTitle: '👀 Xem phim hoạt hình nét viết:',
+    cardDrawTitle: '✍️ Vẽ từng nét theo đúng thứ tự và hướng!',
+    cardDrawHint: '(Sau 3 lần sai sẽ hiện gợi ý)',
+    cardDrawStatus: '✏️ Vẽ nét đầu tiên — theo đúng hướng mũi tên!',
+    cardWritePass: '✅ Đã vượt qua bài viết!',
+    cardSpeakPass: '✅ Đã vượt qua bài nói!',
+    
+    cardStep2: '🎤 Bước 2 — Nói:',
+    cardStep2Lock: '🔒 Hãy vượt qua bài viết trước!',
+    cardStep2LockMsg: 'Vượt qua bài viết trước!',
+    speakListen: '1️⃣ Nghe kỹ trước:',
+    speakBtn: '🔊 Nghe nè!',
+    speakTone: 'Thanh điệu',
+    speakSay: '2️⃣ Bây giờ hãy nói!',
+    speakAttempts: 'Bạn có <strong>3 lần thử</strong> — cứ thử thôi! 🤗',
+    speakBtnRec: '🎤 Chạm & Nói!',
+    
+    navPrev: '← Trước',
+    navNext: 'Tiếp →',
+    
+    masteredMsg: '🌟 ĐÃ THUỘC! Bạn có thể viết và nói',
+    
+    gamesTitle: '🎮 Chọn Trò chơi!',
+    gamesAll: 'Tất cả chữ và câu đều có sẵn! 🎮',
+    gMatchTitle: '🎯 Nối Từ!',
+    gMatchDesc: 'Nối chữ với nghĩa',
+    gFindTitle: '🔍 Tìm Chữ!',
+    gFindDesc: 'Tìm đúng chữ',
+    gPinyinTitle: '🎵 Chọn Pinyin!',
+    gPinyinDesc: 'Chọn âm đúng',
+    gFlashTitle: '⚡ Thẻ Nhớ!',
+    gFlashDesc: 'Thử thách ghi nhớ nhanh!',
+    gSentTitle: '💬 Nối Câu!',
+    gSentDesc: 'Nối câu với nghĩa',
+    gToneTitle: '🎶 Trắc Nghiệm Thanh!',
+    gToneDesc: 'Chọn đúng thanh điệu!',
+    
+    gScore: 'Điểm:',
+    gStreak: 'Chuỗi:',
+    gWhatMean: 'Cái này nghĩa là gì?',
+    gHowSay: 'Cái này đọc sao?',
+    gReveal: '🔮 Xem Đáp án!',
+    gDidKnow: 'Bạn có biết không?',
+    gYes: '✅ Có!',
+    gNo: '❌ Không',
+    gCorrect: 'Chính xác!',
+    gWrong: 'Chưa đúng!',
+    gTryAgain: 'Thử lại ➜',
+    gNext: 'Tiếp ➜',
+    
+    progTitle: '🏆 Tiến Độ Của Bạn',
+    progChars: 'Chữ đã thuộc:',
+    progSent: 'Câu đã học:',
+    progComplete: 'hoàn thành',
+    progWrite: 'Viết',
+    progSpeak: 'Nói',
+    progMastered: 'Đã thuộc',
+    progReset: '🔄 Đặt lại tiến trình',
+    
+    quizRetry: '🗑️ Làm lại',
+    quizHint: '💡 Gợi ý',
+    quizStroke: 'Nét:',
+    
+    toastNoAudio: '⚠️ Không có âm thanh. Hãy dùng Chrome!',
+    toastNoVoice: '⚠️ Không có tiếng Trung — cài đặt ngôn ngữ.',
+    toastListen: '🎤 Đang nghe... hãy nói câu!',
+    toastMicBlock: '🎙️ Micro bị chặn!',
+    toastHeard: 'Tôi nghe:',
+    toastTryAgain: '— thử lại nhé!',
+    
+    toneNeutral: 'Thanh nhẹ',
+    tone1: 'Thanh 1 (ā)',
+    tone2: 'Thanh 2 (á)',
+    tone3: 'Thanh 3 (ǎ)',
+    tone4: 'Thanh 4 (à)'
+  }
+};
+// 2. STATE & HELPER
+let currentLang = localStorage.getItem('hzLang') || 'en';
+
+function t(key) {
+  return LANG[currentLang][key] || LANG['en'][key] || key;
+}
+
+function toggleLang() {
+  // Cycle: en -> zh -> vi -> en
+  if (currentLang === 'en') currentLang = 'zh';
+  else if (currentLang === 'zh') currentLang = 'vi';
+  else currentLang = 'en';
+
+  localStorage.setItem('hzLang', currentLang);
+  
+  // Update button text
+  const btn = document.getElementById('langBtn');
+  if (btn) {
+    if (currentLang === 'en') btn.textContent = 'EN';
+    else if (currentLang === 'zh') btn.textContent = '中文';
+    else btn.textContent = 'VI';
+  }
+  
+  // Re-render everything
+  updateHdr();
+  renderChs();
+  if (curCh) renderLearn();
+  renderGames();
+  renderProg();
+}
+   
 const CHAPTERS = [
   // ── ORIGINAL 5 CHAPTERS (Primary 1) ──────────────────
   {
@@ -667,7 +1000,7 @@ const CD = {
 // (Sentence chapters defined inline in CHAPTERS above)
 </script>
 <script>// ═══════════════════════════════════════════════════════
-// HANZIHERO — app.js
+// ZiZi — app.js
 // ═══════════════════════════════════════════════════════
 
 // ── STATE ─────────────────────────────────────────────
@@ -698,10 +1031,21 @@ function getStatus(c) {
 function updateHdr() {
   const all = Object.keys(CD);
   const mastered = all.filter(c => getStatus(c) === 'mastered').length;
+  
+  document.getElementById('appTitle').textContent = t('appTitle');
   document.getElementById('hStars').textContent = stars;
-  document.getElementById('hMastered').textContent = mastered;
-  document.getElementById('hWrite').textContent = all.filter(c => S[c]?.w).length;
-  document.getElementById('hSpeak').textContent = all.filter(c => S[c]?.sp).length;
+  
+  // We need to manually update the stats text since it's hardcoded in HTML for now
+  // Ideally, render these via JS, but here is a quick fix:
+  const statsDiv = document.querySelector('.hdr-stats');
+  if(statsDiv) {
+    statsDiv.innerHTML = `
+      <span>⭐ <span id="hStars">${stars}</span></span>
+      <span>✅ <span id="hMastered">${mastered}</span> ${t('statMastered')}</span>
+      <span>✏️ <span id="hWrite">${all.filter(c => S[c]?.w).length}</span> ${t('statWrite')}</span>
+      <span>🎤 <span id="hSpeak">${all.filter(c => S[c]?.sp).length}</span> ${t('statSpeak')}</span>
+    `;
+  }
 }
 
 // ── STROKE NAME LOOKUP TABLE (Accurate per character) ─────────────────
@@ -859,6 +1203,13 @@ function playCompleteSound() {
 
 // ── INIT ──────────────────────────────────────────────
 function init() {
+ const langBtn = document.getElementById('langBtn');
+  if (langBtn) {
+    if (currentLang === 'en') langBtn.textContent = 'EN';
+    else if (currentLang === 'zh') langBtn.textContent = '中文';
+    else langBtn.textContent = 'VI';
+  }
+   
   updateHdr();
   renderChs();
   renderGames();
@@ -920,8 +1271,7 @@ function renderChs() {
   const charChs = CHAPTERS.filter(c => !c.isSentence);
   const sentChs = CHAPTERS.filter(c => c.isSentence);
 
-  let html = `<div style="font-size:1rem;font-weight:800;color:#555;margin-bottom:10px">📖 Character Chapters</div>
-    <div class="ch-grid">
+  let html = `<div style="font-size:1rem...">${t('chHeaderChars')}</div>
     ${charChs.map(ch => chCardHTML(ch)).join('')}
     </div>
     <div style="font-size:1rem;font-weight:800;color:#555;margin:18px 0 10px">💬 Sentence Chapters</div>
